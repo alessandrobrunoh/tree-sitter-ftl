@@ -31,8 +31,6 @@ module.exports = grammar({
       $.import_directive,
       $.macro_directive,
       $.if_directive,
-      $.else_directive,
-      $.elseif_directive,
       $.list_directive,
       $.items_directive,
       $.assign_directive,
@@ -75,21 +73,22 @@ module.exports = grammar({
       field('condition', $.expression),
       '>',
       optional($.block_content),
+      repeat($.elseif_branch),
+      optional($.else_branch),
       '</#if>'
     ),
 
-    else_directive: $ => seq(
-      '<#else>',
-      optional($.block_content),
-      '</#else>'
-    ),
-
-    elseif_directive: $ => prec.right(seq(
+    elseif_branch: $ => seq(
       '<#elseif',
       field('condition', $.expression),
       '>',
-      $.block_content
-    )),
+      optional($.block_content)
+    ),
+
+    else_branch: $ => seq(
+      '<#else>',
+      optional($.block_content)
+    ),
 
     list_directive: $ => seq(
       '<#list',
@@ -187,16 +186,10 @@ module.exports = grammar({
 
     parameter: $ => $.identifier,
 
-    named_parameter: $ => prec.left(seq(
+    named_parameter: $ => prec(1, seq(
       $.identifier,
       '=',
-      choice(
-        $.string,
-        $.number,
-        $.boolean,
-        $.qualified_identifier,
-        $.expression
-      )
+      $.expression
     )),
 
     qualified_identifier: $ => prec.right(seq(
