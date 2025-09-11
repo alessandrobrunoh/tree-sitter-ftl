@@ -2,7 +2,6 @@ module.exports = grammar({
   name: 'ftl',
 
   conflicts: $ => [
-    [$.named_parameter, $.expression],
     [$.directive, $._definition]
   ],
 
@@ -143,7 +142,7 @@ module.exports = grammar({
     binary_expression: $ => prec.left(choice(
       seq($.expression, '==', $.expression),
       seq($.expression, '!=', $.expression),
-      seq($.expression, '=', $.expression),
+      prec(-1, seq($.expression, '=', $.expression)),
       seq($.expression, '<', $.expression),
       seq($.expression, '>', $.expression),
       seq($.expression, '<=', $.expression),
