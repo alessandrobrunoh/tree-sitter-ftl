@@ -37,15 +37,18 @@ module.exports = grammar({
     ),
 
     tag: $ => seq(
-      choice(
-        '</',
-        '<'
-      ),
+      $.tag_start,
       optional($.tag_type),
       $.tag_name,
       optional($.tag_content),
-      '>'
+      $.tag_end
     ),
+
+    tag_start: $ => choice(
+      '</',
+      '<'
+    ),
+    tag_end: $ => ">",
 
     tag_type: $ => choice(
       "@",
