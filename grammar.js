@@ -73,6 +73,7 @@ module.exports = grammar({
       $.html_tag,
       $.tag_name,
       $.tag_attributes,
+      $.string_interpolation
     ),
   }
 });
