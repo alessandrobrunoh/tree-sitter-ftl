@@ -33,13 +33,11 @@ module.exports = grammar({
       // optional($.html_body)
     ),
 
-    tag_attributes: $ => repeat($.tag_attribute),
-
-    tag_attribute: $ => seq(
-      $.identifier,
-      '=',
-      $.string
-    ),
+    tag_attributes: $ => seq(
+        $.identifier,
+        '=',
+        $.string
+      ),
 
     string: $ => choice(
       $.string_literal,
@@ -64,7 +62,6 @@ module.exports = grammar({
 
     _definition: $ => choice(
       $.html_tag,
-      $.variable,
       $.variable_declaration,
     ),
   }
