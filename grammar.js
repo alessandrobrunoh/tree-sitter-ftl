@@ -12,11 +12,11 @@ module.exports = grammar({
     source_file: $ => repeat($._definition),
 
     line_comment: $ => token(seq('<#--', /.*/, '-->')),
-    block_comment: $ => token(seq(
-      '/*',
-      /[^*]*\*+([^/*][^*]*\*+)*/,
-      '/'
-    )),
+    // block_comment: $ => token(seq(
+    //   '/*',
+    //   /[^*]*\*+([^/*][^*]*\*+)*/,
+    //   '/'
+    // )),
 
     identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
     boolean: $ => choice(
