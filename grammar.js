@@ -52,9 +52,9 @@ module.exports = grammar({
       "#"
     ),
     tag_name: $ => prec.left(
-      seq(
-        repeat1($.identifier),
-        " "
+      choice(
+        seq($.identifier, optional(seq('.', $.identifier))),
+        $.identifier
       )
     ),
     tag_content: $ => choice(
