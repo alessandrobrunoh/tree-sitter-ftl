@@ -87,8 +87,11 @@
           "value": "${"
         },
         {
-          "type": "SYMBOL",
-          "name": "variable_declaration"
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "variable_declaration"
+          }
         },
         {
           "type": "STRING",

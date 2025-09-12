@@ -31,7 +31,7 @@ module.exports = grammar({
 
     variable: $ => seq(
       '${',
-        $.variable_declaration,
+        repeat($.variable_declaration),
       '}'
     ),
 
