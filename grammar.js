@@ -7,7 +7,7 @@ module.exports = grammar({
     /\s/
   ],
 
-    rules: {
+  rules: {
     source_file: $ => repeat($._definition),
 
     // Comments are handled in extras
@@ -42,14 +42,21 @@ module.exports = grammar({
 
     html_tag: $ => seq(
       '<',
-      optional(repeat($.field_declaration)),
+      optional(choice(
+        $.identifier,
+        repeat1($.field_declaration)
+      )),
       '>'
     ),
 
     variable: $ => seq(
       '${',
-      optional(repeat($.field_declaration)),
+        $.variable_declaration,
       '}'
+    ),
+
+    variable_declaration: $ => seq(
+      $.identifier
     ),
 
     _definition: $ => choice(
@@ -57,11 +64,10 @@ module.exports = grammar({
       $.html_tag,
       $.variable
     ),
-  },
+  }
 });
 
 // Helper function for comma-separated lists
 function sep1(rule, separator) {
-  var ciao = "das";
   return seq(rule, repeat(seq(separator, rule)));
 }

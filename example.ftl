@@ -7,41 +7,39 @@
         ${message.summary}
         </#if>
     <#elseif section = "form">
-    <div id="kc-info-message">
 
-        <#-- Qui inizia la nostra logica di redirect -->
+        <#-- Logica di redirect -->
         <#if message.summary?keep_before(" ") == "accountUpdatedMessage" || message.summary == msg("accountUpdatedMessage")>
-            <#-- Controlla se l'Home URL (client.baseUrl) è impostato per questo client -->
-            <#if client.baseUrl?has_content>
+            <#-- Controlla se client.baseUrl esiste -->
+            <#if (client.baseUrl)?has_content>
                 <script type="text/javascript">
-                    // Usa il valore di client.baseUrl passato da Keycloak
+                    // Usa il valore di client.baseUrl per il redirect
                     var redirectUrl = "${client.baseUrl}";
-
-                    // Esegui il redirect dopo un breve ritardo
+                    console.log("Redirecting to: " + redirectUrl); // Log per debug
                     //setTimeout(function() { window.location.href = redirectUrl; }, 1000);
                 </script>
-                <p>You will be redirected to your application shortly or click <a href="${redirectUrl}">here</a>.</p>
+                <p>${kcSanitize(msg("accountUpdatedMessage"))?no_esc}</p>
+                <p>You will be redirected shortly or <a href="${client.baseUrl}">click here</a>.</p>
             <#else>
-                <#-- Fallback: se non c'è un Home URL, mostra il link standard per tornare all'applicazione (se disponibile) -->
-                <#if client.name?has_content>
-                    <p>Return to the <a href="${client.baseUrl!'#'}">${client.name}</a> application.</p>
+                <p>Error: No client base URL configured. Please contact support.</p>
+            </#if>
+        </#if>
+
+        <div id="kc-info-message">
+            <#-- Rimuovi il messaggio duplicato -->
+            <#if message.summary?keep_before(" ") != "accountUpdatedMessage">
+                <p class="instruction">${message.summary}<#if requiredActions??><#list requiredActions>: <b><#items as reqActionItem>${kcSanitize(msg("requiredAction.${reqActionItem}"))?no_esc}<#sep>, </#items></b></#list><#else></#if></p>
+            </#if>
+            <#if skipLink??>
+            <#else>
+                <#if pageRedirectUri?has_content>
+                    <p><a href="${pageRedirectUri}">${kcSanitize(msg("backToApplication"))?no_esc}</a></p>
+                <#elseif actionUri?has_content>
+                    <p><a href="${actionUri}">${kcSanitize(msg("proceedWithAction"))?no_esc}</a></p>
+                <#elseif (client.baseUrl)?has_content>
+                    <p><a href="${client.baseUrl}">${kcSanitize(msg("backToApplication"))?no_esc}</a></p>
                 </#if>
             </#if>
-        </#if>
-
-
-
-        <p class="instruction">${message.summary}<#if requiredActions??><#list requiredActions>: <b><#items as reqActionItem>${kcSanitize(msg("requiredAction.${reqActionItem}"))?no_esc}<#sep>, </#items></b></#list><#else></#if></p>
-        <#if skipLink??>
-        <#else>
-            <#if pageRedirectUri?has_content>
-                <p><a href="${pageRedirectUri}">${kcSanitize(msg("backToApplication"))?no_esc}</a></p>
-            <#elseif actionUri?has_content>
-                <p><a href="${actionUri}">${kcSanitize(msg("proceedWithAction"))?no_esc}</a></p>
-            <#elseif (client.baseUrl)?has_content>
-                <p><a href="${client.baseUrl}">${kcSanitize(msg("backToApplication"))?no_esc}</a></p>
-            </#if>
-        </#if>
-    </div>
+        </div>
     </#if>
 </@layout.registrationLayout>
