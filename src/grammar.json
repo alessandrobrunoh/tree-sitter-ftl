@@ -57,12 +57,12 @@
       "type": "CHOICE",
       "members": [
         {
-          "type": "STRING",
-          "value": "true"
+          "type": "PATTERN",
+          "value": "[Tt][Rr][Uu][Ee]"
         },
         {
-          "type": "STRING",
-          "value": "false"
+          "type": "PATTERN",
+          "value": "[Ff][Aa][Ll][Ss][Ee]"
         }
       ]
     },
@@ -71,8 +71,17 @@
       "value": "[0-9]+(\\.[0-9]+)?"
     },
     "string": {
-      "type": "PATTERN",
-      "value": "[^']*"
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "PATTERN",
+          "value": "[^']*"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string_literal"
+        }
+      ]
     },
     "string_literal": {
       "type": "CHOICE",
@@ -197,11 +206,20 @@
       "type": "PREC_LEFT",
       "value": 0,
       "content": {
-        "type": "REPEAT1",
-        "content": {
-          "type": "SYMBOL",
-          "name": "identifier"
-        }
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "REPEAT1",
+            "content": {
+              "type": "SYMBOL",
+              "name": "identifier"
+            }
+          },
+          {
+            "type": "STRING",
+            "value": " "
+          }
+        ]
       }
     },
     "tag_content": {
@@ -226,7 +244,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "string"
+          "name": "identifier"
         }
       ]
     },

@@ -19,9 +19,15 @@ module.exports = grammar({
     )),
 
     identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
-    boolean: $ => choice('true', 'false'),
+    boolean: $ => choice(
+      /[Tt][Rr][Uu][Ee]/,
+      /[Ff][Aa][Ll][Ss][Ee]/
+    ),
     number: $ => /[0-9]+(\.[0-9]+)?/,
-    string: $ => /[^']*/,
+    string: $ => choice(
+      /[^']*/,
+      $.string_literal
+    ),
     string_literal: $ => choice(
       seq('"', /[^"]*/, '"'),
       seq("'", /[^']*/, "'")
@@ -45,14 +51,19 @@ module.exports = grammar({
       "@",
       "#"
     ),
-    tag_name: $ => prec.left(repeat1($.identifier)),
+    tag_name: $ => prec.left(
+      seq(
+        repeat1($.identifier),
+        " "
+      )
+    ),
     tag_content: $ => choice(
       $.tag_import_as,
-      $.tag_attributes
+      $.tag_attributes,
     ),
     tag_import_as: $ => seq(
       ' as ',
-      $.string
+      $.identifier
     ),
     tag_attributes: $ => seq(
       ' ',
@@ -60,6 +71,13 @@ module.exports = grammar({
       '=',
       $.string_literal
     ),
+
+
+
+
+
+
+    // asdadasdaad
 
     _definition: $ => choice(
       $.tag,

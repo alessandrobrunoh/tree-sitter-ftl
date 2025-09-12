@@ -37,11 +37,6 @@
     }
   },
   {
-    "type": "string",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "string_literal",
     "named": true,
     "fields": {}
@@ -116,7 +111,7 @@
       "required": true,
       "types": [
         {
-          "type": "string",
+          "type": "identifier",
           "named": true
         }
       ]
@@ -188,10 +183,6 @@
     "extra": true
   },
   {
-    "type": "false",
-    "named": false
-  },
-  {
     "type": "identifier",
     "named": true
   },
@@ -203,9 +194,5 @@
   {
     "type": "number",
     "named": true
-  },
-  {
-    "type": "true",
-    "named": false
   }
 ]
