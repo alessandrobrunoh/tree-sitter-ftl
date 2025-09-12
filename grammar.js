@@ -31,6 +31,8 @@ module.exports = grammar({
     tag_name: $ => seq(
       choice(
         $.tag_import,
+        $.tag_layout,
+        $.tag_statement,
         $.identifier,
       )
     ),
@@ -42,11 +44,44 @@ module.exports = grammar({
       $.identifier
     ),
 
+    tag_layout: $ => choice(
+      $.tag_layout_start,
+      $.tag_layout_end
+    ),
+
+    tag_layout_start: $ => seq(
+      '/@layout.',
+      $.identifier,
+      optional($.tag_attributes)
+    ),
+
+    tag_layout_end: $ => seq(
+      '/@layout.',
+      $.identifier,
+      optional($.tag_attributes)
+    ),
+
     tag_attributes: $ => seq(
         $.identifier,
         '=',
-        $.string
+        choice(
+          $.string,
+          $.number,
+          $.boolean,
+        ),
+        ";",
+        "section"
       ),
+
+    boolean: $ => choice(
+      'true',
+      'false'
+    ),
+
+    number: $ => choice(
+      /[0-9]+/,
+      /[0-9]+.[0-9]+/
+    ),
 
     string: $ => choice(
       $.string_literal,
