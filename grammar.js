@@ -15,7 +15,7 @@ module.exports = grammar({
     source_file: $ => repeat($._definition),
 
     // Comments are handled in extras
-    line_comment: $ => token(seq('//', /.*/)),
+    line_comment: $ => token(seq('<#--', /.*/, '-->')),
 
     block_comment: $ => token(seq(
       '/*',
@@ -34,36 +34,22 @@ module.exports = grammar({
 
     tag_name: $ => seq(
       choice(
-        $.tag_import,
-        $.tag_layout,
-        // $.tag_statement,
+        $.tag_custom,
         $.identifier,
       )
     ),
 
-    tag_import: $ => seq(
-      '#import ',
+    tag_custom: $ => seq(
+      choice(
+        "@",
+        "#"
+      ),
+      repeat($.identifier),
       $.string_literal,
-      ' as ',
-      $.identifier
-    ),
-
-    tag_layout: $ => choice(
-      $.tag_layout_start,
-      $.tag_layout_end
-    ),
-
-    tag_layout_start: $ => seq(
-      '@layout.',
+      $.string,
       $.identifier,
-      "; section"
-    ),
 
-    tag_layout_end: $ => prec.right(seq(
-      '/@layout.',
-      $.identifier,
-      optional($.tag_attributes)
-    )),
+    ),
 
     tag_attributes: $ => seq(
         $.identifier,

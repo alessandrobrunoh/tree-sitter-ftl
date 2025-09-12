@@ -16,11 +16,15 @@
         "members": [
           {
             "type": "STRING",
-            "value": "//"
+            "value": "<#--"
           },
           {
             "type": "PATTERN",
             "value": ".*"
+          },
+          {
+            "type": "STRING",
+            "value": "-->"
           }
         ]
       }
@@ -89,11 +93,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "tag_import"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "tag_layout"
+              "name": "tag_custom"
             },
             {
               "type": "SYMBOL",
@@ -103,85 +103,42 @@
         }
       ]
     },
-    "tag_import": {
+    "tag_custom": {
       "type": "SEQ",
       "members": [
         {
-          "type": "STRING",
-          "value": "#import "
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": "@"
+            },
+            {
+              "type": "STRING",
+              "value": "#"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
         },
         {
           "type": "SYMBOL",
           "name": "string_literal"
         },
         {
-          "type": "STRING",
-          "value": " as "
+          "type": "SYMBOL",
+          "name": "string"
         },
         {
           "type": "SYMBOL",
           "name": "identifier"
         }
       ]
-    },
-    "tag_layout": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "tag_layout_start"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "tag_layout_end"
-        }
-      ]
-    },
-    "tag_layout_start": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "@layout."
-        },
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "STRING",
-          "value": "; section"
-        }
-      ]
-    },
-    "tag_layout_end": {
-      "type": "PREC_RIGHT",
-      "value": 0,
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "/@layout."
-          },
-          {
-            "type": "SYMBOL",
-            "name": "identifier"
-          },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "tag_attributes"
-              },
-              {
-                "type": "BLANK"
-              }
-            ]
-          }
-        ]
-      }
     },
     "tag_attributes": {
       "type": "SEQ",

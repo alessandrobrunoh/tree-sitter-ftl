@@ -126,7 +126,7 @@
     }
   },
   {
-    "type": "tag_import",
+    "type": "tag_custom",
     "named": true,
     "fields": {},
     "children": {
@@ -135,63 +135,14 @@
       "types": [
         {
           "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         },
         {
           "type": "string_literal",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "tag_layout",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "tag_layout_end",
-          "named": true
-        },
-        {
-          "type": "tag_layout_start",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "tag_layout_end",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "tag_attributes",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "tag_layout_start",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
           "named": true
         }
       ]
@@ -210,22 +161,14 @@
           "named": true
         },
         {
-          "type": "tag_import",
-          "named": true
-        },
-        {
-          "type": "tag_layout",
+          "type": "tag_custom",
           "named": true
         }
       ]
     }
   },
   {
-    "type": " as ",
-    "named": false
-  },
-  {
-    "type": "#import ",
+    "type": "#",
     "named": false
   },
   {
@@ -233,15 +176,7 @@
     "named": false
   },
   {
-    "type": "/@layout.",
-    "named": false
-  },
-  {
     "type": ";",
-    "named": false
-  },
-  {
-    "type": "; section",
     "named": false
   },
   {
@@ -257,7 +192,7 @@
     "named": false
   },
   {
-    "type": "@layout.",
+    "type": "@",
     "named": false
   },
   {
