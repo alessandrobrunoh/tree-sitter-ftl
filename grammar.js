@@ -7,6 +7,10 @@ module.exports = grammar({
     /\s/
   ],
 
+  conflict: $ => [
+    [$.tag_layout_start, $.tag_layout_end]
+  ],
+
   rules: {
     source_file: $ => repeat($._definition),
 
@@ -32,7 +36,7 @@ module.exports = grammar({
       choice(
         $.tag_import,
         $.tag_layout,
-        $.tag_statement,
+        // $.tag_statement,
         $.identifier,
       )
     ),
@@ -50,16 +54,16 @@ module.exports = grammar({
     ),
 
     tag_layout_start: $ => seq(
-      '/@layout.',
+      '@layout.',
       $.identifier,
-      optional($.tag_attributes)
+      "; section"
     ),
 
-    tag_layout_end: $ => seq(
+    tag_layout_end: $ => prec.right(seq(
       '/@layout.',
       $.identifier,
       optional($.tag_attributes)
-    ),
+    )),
 
     tag_attributes: $ => seq(
         $.identifier,
@@ -100,10 +104,6 @@ module.exports = grammar({
       '}'
     ),
 
-    // conflict: $ => [
-    //   [$.tag_name, $.variable_declaration]
-    // ],
-
     _definition: $ => choice(
       $.html_tag,
       $.tag_name,
@@ -111,13 +111,6 @@ module.exports = grammar({
       $.string_interpolation,
       $.boolean,
       $.number,
-      $.tag_layout_start
-      $.tag_layout_end,
     ),
   }
 });
-
-// Helper function for comma-separated lists
-function sep1(rule, separator) {
-  return seq(rule, repeat(seq(separator, rule)));
-}
