@@ -5,6 +5,60 @@
     "fields": {}
   },
   {
+    "type": "condition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "conditional_block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "boolean",
+          "named": true
+        },
+        {
+          "type": "condition",
+          "named": true
+        },
+        {
+          "type": "number",
+          "named": true
+        },
+        {
+          "type": "tag",
+          "named": true
+        },
+        {
+          "type": "tag_attributes",
+          "named": true
+        },
+        {
+          "type": "tag_name",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "source_file",
     "named": true,
     "root": true,
@@ -96,9 +150,13 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": true,
       "types": [
+        {
+          "type": "conditional_block",
+          "named": true
+        },
         {
           "type": "tag_attributes",
           "named": true
@@ -109,6 +167,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "tag_end",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "tag_import_as",
@@ -179,11 +242,23 @@
     "named": false
   },
   {
+    "type": "<#if",
+    "named": false
+  },
+  {
     "type": "</",
     "named": false
   },
   {
+    "type": "</#if>",
+    "named": false
+  },
+  {
     "type": "=",
+    "named": false
+  },
+  {
+    "type": ">",
     "named": false
   },
   {
@@ -206,10 +281,6 @@
   },
   {
     "type": "number",
-    "named": true
-  },
-  {
-    "type": "tag_end",
     "named": true
   }
 ]

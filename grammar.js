@@ -60,9 +60,12 @@ module.exports = grammar({
         $.identifier
       )
     ),
-    tag_content: $ => choice(
-      $.tag_import_as,
-      $.tag_attributes,
+    tag_content: $ => repeat1(
+      choice(
+        $.tag_import_as,
+        $.tag_attributes,
+        $.conditional_block
+      )
     ),
     tag_import_as: $ => seq(
       ' as ',
@@ -74,7 +77,18 @@ module.exports = grammar({
       '=',
       $.string_literal
     ),
-
+    conditional_block: $ => seq(
+      '<#if',
+      $.condition,
+      '>',
+      repeat($._definition),
+      '</#if>'
+    ),
+    condition: $ => seq(
+      $.identifier,
+      '=',
+      $.string_literal
+    ),
 
 
 
