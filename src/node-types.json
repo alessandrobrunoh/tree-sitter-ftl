@@ -44,10 +44,10 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "identifier",
+          "type": "variable_declaration",
           "named": true
         }
       ]
