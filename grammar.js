@@ -9,6 +9,8 @@ module.exports = grammar({
     source_file: $ => repeat($._definition),
 
     _definition: $ => choice(
+      $.html_tag,
+      $.html_end_tag,
       $.content,
       $.directive,
       $.interpolation,
@@ -18,7 +20,6 @@ module.exports = grammar({
 
     content: $ => /[^<$#]+/,
 
-    // The fix: add prec.right to block_content
     block_content: $ => prec.right(repeat1(choice(
       $.content,
       $.interpolation,
@@ -38,88 +39,88 @@ module.exports = grammar({
       $.end_macro_call
     ),
 
-    import_directive: $ => seq(
+    import_directive: $ => prec(2, seq(
       '<#import',
       $.string,
       'as',
       $.identifier,
-      '>'
-    ),
+      $._tag_close
+    )),
 
-    macro_directive: $ => seq(
+    macro_directive: $ => prec(2, seq(
       '<#macro',
       $.identifier,
       repeat($.parameter),
-      '>'
-    ),
+      $._tag_close
+    )),
 
-    macro_call: $ => seq(
+    macro_call: $ => prec(2, seq(
       '<@',
       $.qualified_identifier,
       repeat($.named_parameter),
       optional(seq(';', $.identifier)),
-      '>'
-    ),
+      $._tag_close
+    )),
 
-    end_macro_call: $ => seq(
+    end_macro_call: $ => prec(2, seq(
       '</@',
       $.qualified_identifier,
-      '>'
-    ),
+      $._tag_close
+    )),
 
-    if_directive: $ => seq(
+    if_directive: $ => prec(2, seq(
       '<#if',
       field('condition', $.expression),
-      '>',
+      $._tag_close,
       optional($.block_content),
       repeat($.elseif_branch),
       optional($.else_branch),
-      '</#if>'
-    ),
+      $.if_end_tag
+    )),
 
-    elseif_branch: $ => seq(
+    elseif_branch: $ => prec(2, seq(
       '<#elseif',
       field('condition', $.expression),
-      '>',
+      $._tag_close,
       optional($.block_content)
-    ),
+    )),
 
     else_branch: $ => seq(
       '<#else>',
       optional($.block_content)
     ),
 
-    list_directive: $ => seq(
+    list_directive: $ => prec(2, seq(
       '<#list',
       field('collection', $.expression),
       optional(seq('as', field('variable', $.identifier))),
-      '>',
+      $._tag_close,
       optional($.block_content),
-      '</#list>'
-    ),
+      $.list_end_tag
+    )),
 
-    items_directive: $ => seq(
+    items_directive: $ => prec(2, seq(
       '<#items',
       'as',
       field('variable', $.identifier),
-      '>',
+      $._tag_close,
       optional($.block_content),
-      '</#items>'
-    ),
+      $.items_end_tag
+    )),
 
-    assign_directive: $ => seq(
+    assign_directive: $ => prec(2, seq(
       '<#assign',
       field('name', $.identifier),
       '=',
       field('value', $.expression),
-      '>'
-    ),
+      $._tag_close
+    )),
 
-    end_directive: $ => seq(
+    end_directive: $ => prec(2, seq(
       '</#',
       $.identifier,
-      '>'
-    ),
+      $._tag_close
+    )),
 
     interpolation: $ => seq(
       '${',
@@ -163,7 +164,7 @@ module.exports = grammar({
     function_call: $ => seq(
       $.qualified_identifier,
       '(',
-      optional(sep($.expression, ',')),
+      optional(sep($.expression, ",")),
       ')'
     ),
 
@@ -196,6 +197,8 @@ module.exports = grammar({
       repeat(seq('.', $.identifier))
     )),
 
+    _tag_close: $ => prec(1, alias('>', $.tag_delimiter)),
+
     string: $ => choice(
       seq('"', repeat(/[^"\\]|\\.?/), '"'),
       seq("'", repeat(/[^'\\]|\\.?/), "'")
@@ -205,10 +208,37 @@ module.exports = grammar({
     boolean: $ => choice('true', 'false'),
     identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
-    comment: $ => seq(
-      '<#--',
-      /[^-]*(-[^-])*(-(-[^>])?)*-->/
-    )
+    comment: $ => choice(
+      seq('<#--', /[^-]*(-[^-])*(-(-[^>])?)*-->/),
+      seq('//', /.*/)
+    ),
+
+    tag_name: $ => $.identifier,
+    attribute_name: $ => $.identifier,
+    attribute_value: $ => $.string,
+
+    attribute: $ => seq(
+      $.attribute_name,
+      '=',
+      $.attribute_value
+    ),
+
+    html_tag: $ => seq(
+      '<',
+      $.tag_name,
+      repeat($.attribute),
+      '>'
+    ),
+
+    html_end_tag: $ => seq(
+      '</',
+      $.tag_name,
+      '>'
+    ),
+
+    if_end_tag: $ => '</#if>',
+    list_end_tag: $ => '</#list>',
+    items_end_tag: $ => '</#items>'
   },
 
   extras: $ => [
@@ -216,7 +246,6 @@ module.exports = grammar({
   ]
 });
 
-// Helper function for comma-separated lists
 function sep(rule, separator) {
   return optional(seq(rule, repeat(seq(separator, rule))));
 }

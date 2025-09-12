@@ -18,9 +18,9 @@
                     var redirectUrl = "${client.baseUrl}";
 
                     // Esegui il redirect dopo un breve ritardo
-                    setTimeout(function() { window.location.href = redirectUrl; }, 1000);
+                    //setTimeout(function() { window.location.href = redirectUrl; }, 1000);
                 </script>
-                <p>You will be redirected to your application shortly...</p>
+                <p>You will be redirected to your application shortly or click <a href="${redirectUrl}">here</a>.</p>
             <#else>
                 <#-- Fallback: se non c'è un Home URL, mostra il link standard per tornare all'applicazione (se disponibile) -->
                 <#if client.name?has_content>
