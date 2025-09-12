@@ -265,10 +265,6 @@
           {
             "type": "SYMBOL",
             "name": "tag_attributes"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "conditional_block"
           }
         ]
       }
@@ -307,51 +303,6 @@
         }
       ]
     },
-    "conditional_block": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "STRING",
-          "value": "<#if"
-        },
-        {
-          "type": "SYMBOL",
-          "name": "condition"
-        },
-        {
-          "type": "STRING",
-          "value": ">"
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_definition"
-          }
-        },
-        {
-          "type": "STRING",
-          "value": "</#if>"
-        }
-      ]
-    },
-    "condition": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "identifier"
-        },
-        {
-          "type": "STRING",
-          "value": "="
-        },
-        {
-          "type": "SYMBOL",
-          "name": "string_literal"
-        }
-      ]
-    },
     "_definition": {
       "type": "CHOICE",
       "members": [
@@ -374,6 +325,18 @@
         {
           "type": "SYMBOL",
           "name": "number"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "variable"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "tag_attributes"
         }
       ]
     }

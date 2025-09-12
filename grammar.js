@@ -64,27 +64,15 @@ module.exports = grammar({
       choice(
         $.tag_import_as,
         $.tag_attributes,
-        $.conditional_block
       )
     ),
     tag_import_as: $ => seq(
       ' as ',
       $.identifier
     ),
+
     tag_attributes: $ => seq(
       ' ',
-      $.identifier,
-      '=',
-      $.string_literal
-    ),
-    conditional_block: $ => seq(
-      '<#if',
-      $.condition,
-      '>',
-      repeat($._definition),
-      '</#if>'
-    ),
-    condition: $ => seq(
       $.identifier,
       '=',
       $.string_literal
@@ -101,7 +89,10 @@ module.exports = grammar({
       $.tag_name,
       $.tag_attributes,
       $.boolean,
-      $.number
+      $.number,
+      $.string,
+      $.variable,
+      $.tag_attributes
     ),
   }
 });
