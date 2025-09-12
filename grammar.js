@@ -31,9 +31,7 @@ module.exports = grammar({
 
     variable: $ => seq(
       '${',
-      optional(choice(
-        $.variable_declaration
-      )),
+        $.variable_declaration,
       '}'
     ),
 
