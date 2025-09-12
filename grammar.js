@@ -32,7 +32,7 @@ module.exports = grammar({
     variable: $ => seq(
       '${',
       optional(choice(
-        $.identifier,
+        $.variable_declaration
       )),
       '}'
     ),
