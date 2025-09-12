@@ -29,8 +29,17 @@ module.exports = grammar({
     ),
 
     tag_name: $ => seq(
-      $.identifier,
-      // optional($.html_body)
+      choice(
+        $.tag_import,
+        $.identifier,
+      )
+    ),
+
+    tag_import: $ => seq(
+      '#import ',
+      $.string_literal,
+      ' as ',
+      $.identifier
     ),
 
     tag_attributes: $ => seq(
@@ -52,22 +61,18 @@ module.exports = grammar({
 
     string_interpolation: $ => seq(
       '${',
-        repeat($.variable_declaration),
+        repeat($.identifier),
       '}'
     ),
 
-    variable_declaration: $ => seq(
-      $.identifier,
-    ),
+    // conflict: $ => [
+    //   [$.tag_name, $.variable_declaration]
+    // ],
 
     _definition: $ => choice(
       $.html_tag,
       $.tag_name,
       $.tag_attributes,
-      $.string,
-      $.string_interpolation,
-      $.string_literal,
-      $.variable_declaration,
     ),
   }
 });

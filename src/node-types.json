@@ -32,7 +32,11 @@
           "named": true
         },
         {
-          "type": "variable_declaration",
+          "type": "tag_attributes",
+          "named": true
+        },
+        {
+          "type": "tag_name",
           "named": true
         }
       ]
@@ -66,7 +70,7 @@
       "required": false,
       "types": [
         {
-          "type": "variable_declaration",
+          "type": "identifier",
           "named": true
         }
       ]
@@ -92,6 +96,25 @@
     }
   },
   {
+    "type": "tag_import",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "string_literal",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "tag_name",
     "named": true,
     "fields": {},
@@ -102,24 +125,21 @@
         {
           "type": "identifier",
           "named": true
+        },
+        {
+          "type": "tag_import",
+          "named": true
         }
       ]
     }
   },
   {
-    "type": "variable_declaration",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
-    }
+    "type": " as ",
+    "named": false
+  },
+  {
+    "type": "#import ",
+    "named": false
   },
   {
     "type": "${",
