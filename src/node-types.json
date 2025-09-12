@@ -5,30 +5,6 @@
     "fields": {}
   },
   {
-    "type": "html_tag",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "tag_attributes",
-          "named": true
-        },
-        {
-          "type": "tag_name",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "number",
-    "named": true,
-    "fields": {}
-  },
-  {
     "type": "source_file",
     "named": true,
     "root": true,
@@ -42,15 +18,11 @@
           "named": true
         },
         {
-          "type": "html_tag",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
-          "type": "string_interpolation",
+          "type": "tag",
           "named": true
         },
         {
@@ -67,32 +39,31 @@
   {
     "type": "string",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "string_interpolation",
-          "named": true
-        },
-        {
-          "type": "string_literal",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
-    "type": "string_interpolation",
+    "type": "string_literal",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "tag",
     "named": true,
     "fields": {},
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
-          "type": "identifier",
+          "type": "tag_content",
+          "named": true
+        },
+        {
+          "type": "tag_name",
+          "named": true
+        },
+        {
+          "type": "tag_type",
           "named": true
         }
       ]
@@ -107,38 +78,7 @@
       "required": true,
       "types": [
         {
-          "type": "boolean",
-          "named": true
-        },
-        {
           "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "tag_custom",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "string",
           "named": true
         },
         {
@@ -149,7 +89,7 @@
     }
   },
   {
-    "type": "tag_name",
+    "type": "tag_content",
     "named": true,
     "fields": {},
     "children": {
@@ -157,30 +97,77 @@
       "required": true,
       "types": [
         {
-          "type": "identifier",
+          "type": "tag_attributes",
           "named": true
         },
         {
-          "type": "tag_custom",
+          "type": "tag_import_as",
           "named": true
         }
       ]
     }
   },
   {
+    "type": "tag_import_as",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "tag_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "tag_type",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": " ",
+    "named": false
+  },
+  {
+    "type": " as ",
+    "named": false
+  },
+  {
+    "type": "\"",
+    "named": false
+  },
+  {
     "type": "#",
     "named": false
   },
   {
-    "type": "${",
-    "named": false
-  },
-  {
-    "type": ";",
+    "type": "'",
     "named": false
   },
   {
     "type": "<",
+    "named": false
+  },
+  {
+    "type": "</",
     "named": false
   },
   {
@@ -193,10 +180,6 @@
   },
   {
     "type": "@",
-    "named": false
-  },
-  {
-    "type": "as ",
     "named": false
   },
   {
@@ -218,19 +201,11 @@
     "extra": true
   },
   {
-    "type": "section",
-    "named": false
-  },
-  {
-    "type": "string_literal",
+    "type": "number",
     "named": true
   },
   {
     "type": "true",
-    "named": false
-  },
-  {
-    "type": "}",
     "named": false
   }
 ]

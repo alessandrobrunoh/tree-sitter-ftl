@@ -1,4 +1,5 @@
 <#import "template.ftl" as layout>
+<#import "template.ftl" as layout>
 <@layout.registrationLayout displayMessage=false; section>
     <#if section = "header">
         <#if messageHeader??>
@@ -8,7 +9,7 @@
         </#if>
     <#elseif section = "form">
 
-        <#-- Logica di redirect -->
+        <#--Logica di redirect -->
         <#if message.summary?keep_before(" ") == "accountUpdatedMessage" || message.summary == msg("accountUpdatedMessage")>
             <#-- Controlla se client.baseUrl esiste -->
             <#if (client.baseUrl)?has_content>
