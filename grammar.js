@@ -45,10 +45,17 @@ module.exports = grammar({
         "#"
       ),
       repeat($.identifier),
-      $.string_literal,
-      $.string,
-      $.identifier,
-
+      choice(
+        seq(
+          $.string_literal,
+          $.string,
+          $.identifier,
+        ),
+        seq(
+          "as ",
+          $.identifier,
+        )
+      )
     ),
 
     tag_attributes: $ => seq(
