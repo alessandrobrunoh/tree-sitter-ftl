@@ -62,6 +62,11 @@ module.exports = grammar({
 
     _definition: $ => choice(
       $.html_tag,
+      $.tag_name,
+      $.tag_attributes,
+      $.string,
+      $.string_interpolation,
+      $.string_literal,
       $.variable_declaration,
     ),
   }
