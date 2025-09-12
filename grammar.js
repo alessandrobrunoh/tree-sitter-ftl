@@ -21,48 +21,30 @@ module.exports = grammar({
 
     identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
-    field_declaration: $ => seq(
-      $.identifier,
-      ':',
-      $.identifier
-    ),
-
-    entity_body: $ => seq(
-      '{',
-      optional(repeat($.field_declaration)),
-      '}'
-    ),
-
-    // Entity declaration
-    entity_declaration: $ => seq(
-      'entity',
-      $.identifier,
-      optional($.entity_body)
-    ),
-
     html_tag: $ => seq(
       '<',
       optional(choice(
         $.identifier,
-        repeat1($.field_declaration)
       )),
       '>'
     ),
 
     variable: $ => seq(
       '${',
-        $.variable_declaration,
+      optional(choice(
+        $.identifier,
+      )),
       '}'
     ),
 
     variable_declaration: $ => seq(
-      $.identifier
+      $.identifier,
     ),
 
     _definition: $ => choice(
-      $.entity_declaration,
       $.html_tag,
-      $.variable
+      $.variable,
+      $.variable_declaration,
     ),
   }
 });

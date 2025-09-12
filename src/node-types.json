@@ -1,65 +1,12 @@
 [
   {
-    "type": "entity_body",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "field_declaration",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "entity_declaration",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "entity_body",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "field_declaration",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "html_tag",
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": false,
       "types": [
-        {
-          "type": "field_declaration",
-          "named": true
-        },
         {
           "type": "identifier",
           "named": true
@@ -77,15 +24,15 @@
       "required": false,
       "types": [
         {
-          "type": "entity_declaration",
-          "named": true
-        },
-        {
           "type": "html_tag",
           "named": true
         },
         {
           "type": "variable",
+          "named": true
+        },
+        {
+          "type": "variable_declaration",
           "named": true
         }
       ]
@@ -97,10 +44,10 @@
     "fields": {},
     "children": {
       "multiple": false,
-      "required": true,
+      "required": false,
       "types": [
         {
-          "type": "variable_declaration",
+          "type": "identifier",
           "named": true
         }
       ]
@@ -126,10 +73,6 @@
     "named": false
   },
   {
-    "type": ":",
-    "named": false
-  },
-  {
     "type": "<",
     "named": false
   },
@@ -143,10 +86,6 @@
     "extra": true
   },
   {
-    "type": "entity",
-    "named": false
-  },
-  {
     "type": "identifier",
     "named": true
   },
@@ -154,10 +93,6 @@
     "type": "line_comment",
     "named": true,
     "extra": true
-  },
-  {
-    "type": "{",
-    "named": false
   },
   {
     "type": "}",
