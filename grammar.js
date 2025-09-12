@@ -108,7 +108,11 @@ module.exports = grammar({
       $.html_tag,
       $.tag_name,
       $.tag_attributes,
-      $.string_interpolation
+      $.string_interpolation,
+      $.boolean,
+      $.number,
+      $.tag_layout_start
+      $.tag_layout_end,
     ),
   }
 });
