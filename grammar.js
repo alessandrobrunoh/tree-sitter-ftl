@@ -23,13 +23,36 @@ module.exports = grammar({
 
     html_tag: $ => seq(
       '<',
-      optional(choice(
-        $.identifier,
-      )),
+        $.tag_name,
+        optional(repeat($.tag_attributes)),
       '>'
     ),
 
-    variable: $ => seq(
+    tag_name: $ => seq(
+      $.identifier,
+      // optional($.html_body)
+    ),
+
+    tag_attributes: $ => repeat($.tag_attribute),
+
+    tag_attribute: $ => seq(
+      $.identifier,
+      '=',
+      $.string
+    ),
+
+    string: $ => choice(
+      $.string_literal,
+      $.string_interpolation
+    ),
+
+    string_literal: $ => token(seq(
+      '"',
+      /[^"]*/,
+      '"'
+    )),
+
+    string_interpolation: $ => seq(
       '${',
         repeat($.variable_declaration),
       '}'
